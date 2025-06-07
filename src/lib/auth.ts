@@ -21,7 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     usersTable,
     sessionsTable,
     verificationTokensTable,
-  } as any),
+  } as never),
   providers: [
     Nodemailer({
       server: process.env.EMAIL_SERVER,
