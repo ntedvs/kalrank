@@ -6,8 +6,9 @@ type Props = { ranks: Rank[] }
 import { DndContext, DragEndEvent } from "@dnd-kit/core"
 import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+import { Trash2 } from "lucide-react"
 import { useState } from "react"
-import { updateRanks } from "./actions"
+import { deleteRank, updateRanks } from "./actions"
 
 export default function List({ ranks }: Props) {
   const [items, setItems] = useState(ranks)
@@ -35,7 +36,7 @@ export default function List({ ranks }: Props) {
         </SortableContext>
       </DndContext>
 
-      <button onClick={() => updateRanks(items)} className="button">
+      <button onClick={() => updateRanks(items)} className="button mt-2 w-full">
         Save
       </button>
     </>
@@ -43,7 +44,8 @@ export default function List({ ranks }: Props) {
 }
 
 function Item({ id, name }: Rank) {
-  const { listeners, transform, transition, setNodeRef } = useSortable({ id })
+  const { attributes, listeners, transform, transition, setNodeRef } =
+    useSortable({ id })
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -52,12 +54,17 @@ function Item({ id, name }: Rank) {
 
   return (
     <div
+      {...attributes}
       {...listeners}
       ref={setNodeRef}
       style={style}
-      className="input cursor-move bg-background"
+      className="input flex cursor-move items-center justify-between bg-background"
     >
       <p>{name}</p>
+
+      <button onMouseDown={() => deleteRank(id)}>
+        <Trash2 className="size-5 text-red-400" />
+      </button>
     </div>
   )
 }

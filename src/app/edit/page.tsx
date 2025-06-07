@@ -34,10 +34,23 @@ export default async function Edit() {
           await db
             .insert(ranksTable)
             .values({ name, position, userId: session.user.id })
+
+          redirect("/edit")
         }}
+        className="mb-12 flex flex-col"
       >
-        <label htmlFor="name">Name</label>
-        <input id="name" name="name" required className="input" />
+        <label htmlFor="name">Add Item</label>
+        <div className="mb-2 flex gap-2">
+          <input
+            id="name"
+            name="name"
+            required
+            placeholder="Name"
+            className="input w-full"
+          />
+
+          <button className="button">Random</button>
+        </div>
 
         <Pending />
       </form>

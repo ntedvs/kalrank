@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #f5fbfb;
-  --color-foreground: #030808;
-  --color-primary: #72c4c3;
+  --color-background: #000f00;
+  --color-foreground: #ffffff;
+  --color-primary: #4fad6b;
   --color-secondary: #b5c479;
 }
 
 @layer base {
+  h1 {
+    @apply mb-4 text-4xl font-bold;
+  }
+
   button {
     @apply cursor-pointer;
   }
@@ -25,6 +29,6 @@
 
 @layer utilities {
   .chunk {
-    @apply mx-auto w-full max-w-4xl;
+    @apply m-4 mx-auto w-full max-w-4xl;
   }
 }
