@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #f5fbfb;
+  --color-foreground: #030808;
+  --color-primary: #72c4c3;
+  --color-secondary: #b5c479;
+}
+
+@layer base {
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .input {
+    @apply rounded-md border-2 border-primary p-2;
+  }
+
+  .button {
+    @apply rounded-md bg-primary p-2 text-background;
+  }
+}
+
+@layer utilities {
+  .chunk {
+    @apply mx-auto w-full max-w-4xl;
+  }
+}

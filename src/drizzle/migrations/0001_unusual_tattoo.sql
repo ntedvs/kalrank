@@ -1,0 +1,1 @@
+ALTER TABLE "ranks" ADD COLUMN "created" timestamp DEFAULT now() NOT NULL;
