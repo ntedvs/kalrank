@@ -40,7 +40,7 @@ export default function List({ ranks: initial }: Props) {
             onDragStart={() => start(i)}
             onDragEnter={() => enter(i)}
             onDragEnd={end}
-            className="input flex cursor-grab justify-between border-gray-200!"
+            className="input flex cursor-grab touch-none justify-between border-gray-200!"
             key={i}
           >
             <p>{rank.name}</p>
