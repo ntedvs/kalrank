@@ -7,7 +7,7 @@ import { shape, validate } from "@/utils/client"
 import { eq, ilike, or } from "drizzle-orm"
 import { redirect } from "next/navigation"
 
-export const signup = async (state: any, fd: FormData) => {
+export const signup = async (state: unknown, fd: FormData) => {
   const { email: e, username: u } = shape(fd)
   const email = e.trim().toLowerCase()
   const username = u.trim()

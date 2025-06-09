@@ -4,7 +4,7 @@ import { signIn } from "@/lib/auth"
 import { shape, validate } from "@/utils/client"
 import { redirect } from "next/navigation"
 
-export const login = async (state: any, fd: FormData) => {
+export const login = async (state: unknown, fd: FormData) => {
   const { email: e } = shape(fd)
   const email = e.trim().toLowerCase()
 
