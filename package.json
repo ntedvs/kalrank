@@ -6,17 +6,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "drizzle": "drizzle-kit"
+    "drizzle": "drizzle-kit",
+    "clean": "rm -rf node_modules pnpm-lock.yaml .next && pnpm up --latest && pnpm up next@canary next-auth@beta"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.9.1",
-    "@dnd-kit/core": "^6.3.1",
-    "@dnd-kit/sortable": "^10.0.0",
-    "@dnd-kit/utilities": "^3.2.2",
+    "@hello-pangea/dnd": "^18.0.1",
     "@neondatabase/serverless": "^1.0.1",
     "drizzle-orm": "^0.44.2",
     "lucide-react": "^0.513.0",
-    "next": "15.3.3",
+    "next": "15.4.0-canary.72",
     "next-auth": "5.0.0-beta.28",
     "nodemailer": "^7.0.3",
     "react": "^19.1.0",

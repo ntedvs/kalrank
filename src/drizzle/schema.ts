@@ -16,7 +16,11 @@ export const usersTable = pgTable("users", {
   email: text().notNull().unique(),
   username: text().notNull().unique(),
   created: timestamp().notNull().defaultNow(),
+
   customer: text().unique(),
+  type: text({ enum: ["free", "plus"] })
+    .notNull()
+    .default("free"),
 })
 
 export const usersRelations = relations(usersTable, ({ many }) => ({

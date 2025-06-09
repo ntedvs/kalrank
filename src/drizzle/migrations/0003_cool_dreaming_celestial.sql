@@ -1,0 +1,1 @@
+ALTER TABLE "ranks" DROP CONSTRAINT "ranks_position_userId_unique";

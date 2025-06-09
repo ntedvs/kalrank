@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #000f00;
-  --color-foreground: #ffffff;
-  --color-primary: #4fad6b;
-  --color-secondary: #b5c479;
+  --color-background: #fcfdfd;
+  --color-foreground: #0d1111;
+  --color-primary: #426b69;
 }
 
 @layer base {
   h1 {
-    @apply mb-4 text-4xl font-bold;
+    @apply mb-4 text-center text-4xl font-bold;
   }
 
   button {
@@ -24,11 +23,5 @@
 
   .button {
     @apply rounded-md bg-primary p-2 text-background;
-  }
-}
-
-@layer utilities {
-  .chunk {
-    @apply m-4 mx-auto w-full max-w-4xl;
   }
 }

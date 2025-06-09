@@ -1,11 +1,13 @@
-import Pending from "@/components/pending"
 import { ranksTable } from "@/drizzle/schema"
 import { auth } from "@/lib/auth"
 import { db } from "@/lib/drizzle"
-import { shape } from "@/utils/client"
-import { desc, eq } from "drizzle-orm"
+import { eq } from "drizzle-orm"
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
+import Add from "./add"
 import List from "./list"
+
+export const metadata: Metadata = { title: "Edit" }
 
 export default async function Edit() {
   const session = await auth()
@@ -19,42 +21,7 @@ export default async function Edit() {
     <>
       <h1>Edit</h1>
 
-      <form
-        action={async (fd) => {
-          "use server"
-
-          const last = await db.query.ranksTable.findFirst({
-            where: eq(ranksTable.userId, session.user.id),
-            orderBy: desc(ranksTable.position),
-          })
-
-          const { name } = shape(fd)
-          const position = last ? last.position + 1 : 1
-
-          await db
-            .insert(ranksTable)
-            .values({ name, position, userId: session.user.id })
-
-          redirect("/edit")
-        }}
-        className="mb-12 flex flex-col"
-      >
-        <label htmlFor="name">Add Item</label>
-        <div className="mb-2 flex gap-2">
-          <input
-            id="name"
-            name="name"
-            required
-            placeholder="Name"
-            className="input w-full"
-          />
-
-          <button className="button">Random</button>
-        </div>
-
-        <Pending />
-      </form>
-
+      <Add />
       <List ranks={ranks} />
     </>
   )

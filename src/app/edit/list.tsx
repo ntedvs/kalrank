@@ -1,70 +1,58 @@
 "use client"
 
-type Rank = { id: string; name: string }
-type Props = { ranks: Rank[] }
-
-import { DndContext, DragEndEvent } from "@dnd-kit/core"
-import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities"
-import { Trash2 } from "lucide-react"
-import { useState } from "react"
+import Pending from "@/components/pending"
+import { Trash } from "lucide-react"
+import { useRef, useState } from "react"
 import { deleteRank, updateRanks } from "./actions"
 
-export default function List({ ranks }: Props) {
-  const [items, setItems] = useState(ranks)
+type Props = { ranks: { id: string; name: string }[] }
 
-  const end = ({ active, over }: DragEndEvent) => {
-    if (!over || active.id === over.id) return
+export default function List({ ranks: initial }: Props) {
+  const [ranks, setRanks] = useState(initial)
+  const item = useRef<number | null>(null)
+  const over = useRef<number | null>(null)
 
-    setItems((items) => {
-      const from = items.findIndex((item) => item.id === active.id)
-      const to = items.findIndex((item) => item.id === over.id)
+  const start = (i: number) => (item.current = i)
+  const enter = (i: number) => (over.current = i)
 
-      return arrayMove(items, from, to)
-    })
+  const end = () => {
+    const from = item.current
+    const to = over.current
+
+    if (!from || !to || from === to) return
+
+    const order = [...ranks]
+    const [moved] = order.splice(from, 1)
+    order.splice(to, 0, moved)
+
+    setRanks(order)
+    item.current = over.current = null
   }
 
   return (
     <>
-      <DndContext onDragEnd={end}>
-        <SortableContext items={items}>
-          <div className="space-y-2">
-            {items.map(({ id, name }) => (
-              <Item id={id} name={name} key={id} />
-            ))}
+      <div className="mt-2 space-y-2">
+        {ranks.map((rank, i) => (
+          <div
+            draggable
+            onDragStart={() => start(i)}
+            onDragEnter={() => enter(i)}
+            onDragEnd={end}
+            className="input flex cursor-grab justify-between border-gray-200!"
+            key={i}
+          >
+            <p>{rank.name}</p>
+
+            <button onClick={() => deleteRank(rank.id)}>
+              <Trash className="text-red-400" />
+            </button>
           </div>
-        </SortableContext>
-      </DndContext>
+        ))}
 
-      <button onClick={() => updateRanks(items)} className="button mt-2 w-full">
-        Save
-      </button>
+        <form action={() => updateRanks(ranks)} className="flex flex-col">
+          <Pending />
+        </form>
+      </div>
     </>
-  )
-}
-
-function Item({ id, name }: Rank) {
-  const { attributes, listeners, transform, transition, setNodeRef } =
-    useSortable({ id })
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  }
-
-  return (
-    <div
-      {...attributes}
-      {...listeners}
-      ref={setNodeRef}
-      style={style}
-      className="input flex cursor-move items-center justify-between bg-background"
-    >
-      <p>{name}</p>
-
-      <button onMouseDown={() => deleteRank(id)}>
-        <Trash2 className="size-5 text-red-400" />
-      </button>
-    </div>
   )
 }

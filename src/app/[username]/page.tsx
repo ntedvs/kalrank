@@ -1,8 +1,7 @@
 import { usersTable } from "@/drizzle/schema"
-import { auth } from "@/lib/auth"
 import { db } from "@/lib/drizzle"
 import { ilike } from "drizzle-orm"
-import Link from "next/link"
+import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 type Props = { params: Promise<{ username: string }> }
@@ -18,26 +17,29 @@ const getUser = async (username: string) => {
   return user
 }
 
-export default async function List({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params
   const user = await getUser(username)
 
-  const session = await auth()
+  return { title: user.username }
+}
+
+export default async function Username({ params }: Props) {
+  const { username } = await params
+  const user = await getUser(username)
 
   return (
     <>
       <h1>{user.username}</h1>
 
-      {session && session.user.id === user.id && <Link href="/edit">Edit</Link>}
-
       <div className="space-y-4">
-        {user.ranks.map(({ id, name, position }) => (
-          <div className="input flex items-center gap-8 text-xl" key={id}>
-            <p className="button flex size-20 items-center justify-center">
-              {position}
+        {user.ranks.map((rank, i) => (
+          <div className="input flex items-center gap-4 text-lg" key={i}>
+            <p className="button flex size-16 items-center justify-center">
+              #{i + 1}
             </p>
 
-            <p>{name}</p>
+            <p>{rank.name}</p>
           </div>
         ))}
       </div>
