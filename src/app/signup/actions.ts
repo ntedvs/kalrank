@@ -20,7 +20,7 @@ export const signup = async (state: unknown, fd: FormData) => {
     return { error: "Invalid username", fd }
   }
 
-  const bad = ["signup", "login", "edit", "plus"]
+  const bad = ["signup", "login", "verify", "edit", "plus"]
 
   if (bad.includes(username.toLowerCase())) {
     return { error: "Invalid username", fd }
