@@ -33,7 +33,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
         <main className="my-8 grow">{children}</main>
 
-        <footer className="flex justify-between text-foreground/60">
+        <footer className="flex flex-col items-center justify-between text-foreground/60 sm:flex-row">
           <div className="flex gap-2">
             <Link href="https://github.com/ntedvs/kalrank" target="_blank">
               GitHub

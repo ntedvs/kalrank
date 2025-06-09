@@ -19,7 +19,7 @@ export default function List({ ranks: initial }: Props) {
     const from = item.current
     const to = over.current
 
-    if (!from || !to || from === to) return
+    if (from === null || to === null || from === to) return
 
     const order = [...ranks]
     const [moved] = order.splice(from, 1)
@@ -28,6 +28,8 @@ export default function List({ ranks: initial }: Props) {
     setRanks(order)
     item.current = over.current = null
   }
+
+  if (!ranks.length) return
 
   return (
     <>
@@ -43,9 +45,11 @@ export default function List({ ranks: initial }: Props) {
           >
             <p>{rank.name}</p>
 
-            <button onClick={() => deleteRank(rank.id)}>
-              <Trash className="text-red-400" />
-            </button>
+            <form action={() => deleteRank(rank.id)} className="flex">
+              <button>
+                <Trash className="text-red-400" />
+              </button>
+            </form>
           </div>
         ))}
 

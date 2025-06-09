@@ -20,6 +20,12 @@ export const signup = async (state: unknown, fd: FormData) => {
     return { error: "Invalid username", fd }
   }
 
+  const bad = ["signup", "login", "edit", "plus"]
+
+  if (bad.includes(username.toLowerCase())) {
+    return { error: "Invalid username", fd }
+  }
+
   const exist = await db.query.usersTable.findFirst({
     where: or(
       eq(usersTable.email, email),
