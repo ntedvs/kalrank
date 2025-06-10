@@ -10,32 +10,30 @@ export default function Add() {
   const ran = ["Apple", "Banana", "Orange"]
 
   return (
-    <>
-      <form action={createRank} className="flex flex-col">
-        <label htmlFor="name">Add Item</label>
+    <form action={createRank} className="flex flex-col">
+      <label htmlFor="name">Name</label>
 
-        <div className="mb-2 flex gap-2">
-          <input
-            id="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            placeholder="Name"
-            className="input w-full"
-          />
+      <div className="mb-2 flex gap-2">
+        <input
+          id="name"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          placeholder="Name"
+          className="input w-full"
+        />
 
-          <button
-            type="button"
-            onClick={() => setName(ran[Math.floor(Math.random() * ran.length)])}
-            className="button"
-          >
-            Random
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setName(ran[Math.floor(Math.random() * ran.length)])}
+          className="button"
+        >
+          Random
+        </button>
+      </div>
 
-        <Pending />
-      </form>
-    </>
+      <Pending text="Add Item" />
+    </form>
   )
 }
