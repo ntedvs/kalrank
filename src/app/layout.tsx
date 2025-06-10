@@ -41,13 +41,13 @@ export default function Layout({ children }: { children: ReactNode }) {
 
             <p>•</p>
 
-            <Link href="https://www.tiktok.com/@kalrank" target="_blank">
+            <Link href="https://www.tiktok.com/@kalrank_" target="_blank">
               TikTok
             </Link>
 
             <p>•</p>
 
-            <Link href="https://www.instagram.com/kalrank" target="_blank">
+            <Link href="https://www.instagram.com/kalrank_" target="_blank">
               Instagram
             </Link>
           </div>
@@ -62,27 +62,24 @@ export default function Layout({ children }: { children: ReactNode }) {
 async function Wrapper() {
   const session = await auth()
 
-  return session ? (
+  const [one, two] = session
+    ? [
+        { text: "Edit", path: "edit" },
+        { text: "Ranks", path: session.user.username.toLowerCase() },
+      ]
+    : [
+        { text: "Sign Up", path: "signup" },
+        { text: "Log In", path: "login" },
+      ]
+
+  return (
     <div className="flex gap-2">
-      <Link href="/edit" className="input w-20 py-1.5! text-center">
-        Edit
+      <Link href={"/" + one.path} className="input w-20 py-1.5! text-center">
+        {one.text}
       </Link>
 
-      <Link
-        href={"/" + session.user.username.toLowerCase()}
-        className="button w-20 text-center"
-      >
-        Ranks
-      </Link>
-    </div>
-  ) : (
-    <div className="flex gap-2">
-      <Link href="/signup" className="input w-20 py-1.5! text-center">
-        Sign Up
-      </Link>
-
-      <Link href="/login" className="button w-20 text-center">
-        Log In
+      <Link href={"/" + two.path} className="button w-20 text-center">
+        {two.text}
       </Link>
     </div>
   )
